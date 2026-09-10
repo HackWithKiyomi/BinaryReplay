@@ -1,0 +1,17 @@
+{
+  "name": "binary-replay",
+  "private": true,
+  "packageManager": "pnpm@10.15.0",
+  "scripts": {
+    "dev": "pnpm --filter @binaryreplay/web dev",
+    "build": "pnpm -r build",
+    "test": "pnpm --filter @binaryreplay/web test",
+    "test:unit": "pnpm --filter @binaryreplay/replay test && pnpm --filter @binaryreplay/simulator test && pnpm --filter @binaryreplay/strategies test",
+    "test:integration": "pnpm --filter @binaryreplay/web test",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "node scripts/lint.mjs",
+    "validate": "pnpm typecheck && pnpm lint && pnpm test:unit && pnpm test:integration && pnpm build",
+    "smoke": "pnpm --filter @binaryreplay/worker smoke:network",
+    "db:migrate": "node --env-file=.env scripts/migrate.mjs"
+  }
+}

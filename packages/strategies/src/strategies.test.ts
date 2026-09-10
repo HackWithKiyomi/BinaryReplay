@@ -1,0 +1,4 @@
+import { describe, expect, it } from "vitest";
+import { momentum, probabilityThreshold } from "./index";
+const snapshot = { marketId: "m", virtualTime: 1n, marketStatus: "Trading" as const, yesBids: [], yesAsks: [{ price: 40n, quantity: 2n }], noBids: [], noAsks: [], lastTradePrice: 40n, referencePrice: 30n };
+describe("reference strategies", () => { it("is deterministic and emits intents rather than fills", () => { const config = { buyBelow: 45n, sellAbove: 60n, quantity: 2n }; expect(probabilityThreshold.evaluate(snapshot, { upQuantity: 0n, downQuantity: 0n, collateral: 0n }, config)).toEqual(probabilityThreshold.evaluate(snapshot, { upQuantity: 0n, downQuantity: 0n, collateral: 0n }, config)); expect(momentum.evaluate(snapshot, { upQuantity: 0n, downQuantity: 0n, collateral: 0n }, { moveBps: 100n, quantity: 1n })[0].action).toBe("BUY_UP"); }); });

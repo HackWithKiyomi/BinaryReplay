@@ -1,0 +1,4 @@
+import { describe, expect, it } from "vitest";
+import { canonicalSerialize, finalizeDataset } from "./index";
+const manifest = { formatVersion: "binaryreplay.dataset.v1" as const, network: "Somnia Shannon", chainId: "50312", marketId: "0x01", symbol: "BTC-1m", asset: "BTC", interval: "1m", tradingStart: "1", expiry: "2", resolutionStatus: "Resolved", winningOutcome: 0, sourceCounts: { orders: "0", fills: "1", candles: "1", resolutionEvents: "1" }, eventCount: "3", captureGaps: [], coverage: { start: "1", end: "2", complete: true, notes: [] }, contentHashes: { source: "abc" } };
+describe("dataset canonicalization", () => { it("is key-order stable and excludes generation time from the hash", () => { expect(canonicalSerialize({ z: 1, a: 2 })).toBe(canonicalSerialize({ a: 2, z: 1 })); expect(finalizeDataset(manifest, "2020-01-01").datasetHash).toBe(finalizeDataset(manifest, "2030-01-01").datasetHash); }); });

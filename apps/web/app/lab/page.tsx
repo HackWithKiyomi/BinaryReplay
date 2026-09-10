@@ -1,0 +1,2 @@
+import {TerminalPage,EmptyData,Rules} from "../(terminal)/page-view";
+export default function Lab(){return <TerminalPage title="Replay lab" kicker="Strategy / simulation"><section className="card" style={{marginTop:20}}><div className="metric"><span>Order model</span><span>partial fills + tick/lot constraints</span></div><div className="metric"><span>Clock</span><span>dataset event time</span></div><div className="metric"><span>State gate</span><span>trading only</span></div></section><EmptyData action="Discover live markets" href="/live"/><Rules/></TerminalPage>}

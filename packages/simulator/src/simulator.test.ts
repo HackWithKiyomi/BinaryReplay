@@ -1,0 +1,4 @@
+import { describe, expect, it } from "vitest";
+import { simulateIntent } from "./index";
+const context = { marketId: "m", virtualTime: 10n, expiry: 100n, marketStatus: "Trading" as const, tickSize: 1n, lotSize: 1n, maxSlippageBps: 500n, latencyMs: 0n, book: { yesBids: [{ price: 40n, quantity: 5n }], yesAsks: [{ price: 50n, quantity: 2n }, { price: 51n, quantity: 2n }], noBids: [], noAsks: [] } };
+describe("fixed-point simulator", () => { it("models visible-depth partial fills without floating point", () => { const result = simulateIntent({ action: "BUY_UP", quantity: 5n, reason: "test" }, context); expect(result.status).toBe("PARTIALLY_FILLED"); expect(result.filledQuantity).toBe(4n); expect(result.averagePrice).toBe(50n); }); it("expires an order delayed beyond the window", () => { expect(simulateIntent({ action: "BUY_UP", quantity: 1n, reason: "test" }, { ...context, virtualTime: 99n, latencyMs: 1n }).status).toBe("EXPIRED"); }); });
