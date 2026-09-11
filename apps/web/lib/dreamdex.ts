@@ -1,8 +1,8 @@
 import { SOMNIA_TESTNET_ADDRESSES, SomniaMarkets, type BinaryMarket, type BinaryMarketStatus } from "@somnia-chain/markets-sdk";
 import { somniaShannon } from "@somnia-chain/markets-sdk/chains";
 
-const INDEXER_URL = process.env.DREAMDEX_INDEXER_URL ?? "https://dev.smk.somnia.host/v1/graphql";
-const WS_RPC_URL = process.env.SOMNIA_WS_RPC_URL ?? "wss://api.infra.testnet.somnia.network/ws";
+const INDEXER_URL = process.env.DREAMDEX_INDEXER_URL || "https://dev.smk.somnia.host/v1/graphql";
+const WS_RPC_URL = process.env.SOMNIA_WS_RPC_URL || "wss://api.infra.testnet.somnia.network/ws";
 const CHAIN_STATUS: Record<number, BinaryMarketStatus> = { 0: "Listed", 1: "Trading", 2: "Locked", 3: "Settling", 4: "Resolved", 5: "Voided" };
 
 export type EventContractRecord = {
@@ -16,7 +16,7 @@ export class EventContractDiscoveryError extends Error { constructor(message: st
 
 /** One isolated Event Contract SDK client. No spot-market discovery path is used. */
 export function dreamdex() {
-  return new SomniaMarkets({ chain: somniaShannon, indexerUrl: INDEXER_URL, wsRpcUrl: process.env.SOMNIA_WS_RPC_URL ?? WS_RPC_URL, addresses: SOMNIA_TESTNET_ADDRESSES });
+  return new SomniaMarkets({ chain: somniaShannon, indexerUrl: INDEXER_URL, wsRpcUrl: WS_RPC_URL, addresses: SOMNIA_TESTNET_ADDRESSES });
 }
 
 function isTerminal(status: BinaryMarketStatus) { return status === "Finalized" || status === "Resolved" || status === "Voided"; }

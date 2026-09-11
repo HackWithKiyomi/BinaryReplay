@@ -5,7 +5,7 @@ import { SOMNIA_TESTNET_ADDRESSES, SomniaMarkets } from "@somnia-chain/markets-s
 import { somniaShannon } from "@somnia-chain/markets-sdk/chains";
 
 const json = (value: unknown) => JSON.parse(JSON.stringify(value, (_key, item) => typeof item === "bigint" ? item.toString() : item));
-const dreamdex = () => new SomniaMarkets({ chain: somniaShannon, indexerUrl: process.env.DREAMDEX_INDEXER_URL ?? "https://dev.smk.somnia.host/v1/graphql", wsRpcUrl: process.env.SOMNIA_WS_RPC_URL ?? "wss://api.infra.testnet.somnia.network/ws", addresses: SOMNIA_TESTNET_ADDRESSES });
+const dreamdex = () => new SomniaMarkets({ chain: somniaShannon, indexerUrl: process.env.DREAMDEX_INDEXER_URL || "https://dev.smk.somnia.host/v1/graphql", wsRpcUrl: process.env.SOMNIA_WS_RPC_URL || "wss://api.infra.testnet.somnia.network/ws", addresses: SOMNIA_TESTNET_ADDRESSES });
 const references: Record<string, Strategy<any>> = { "probability-threshold": probabilityThreshold, "book-imbalance": bookImbalance, momentum, "mean-reversion": meanReversion, "passive-maker": passiveMaker };
 export type ShadowConfig = { sessionId: string; marketId: `0x${string}`; poolAddress: `0x${string}`; strategyId: keyof typeof references; strategyVersion: string; strategyConfiguration: Record<string, bigint>; tickSize: bigint; lotSize: bigint; maxSlippageBps: bigint; latencyMs: bigint };
 export type ShadowSink = { session: (value: { id: string; marketId: string; strategyDefinitionId: string; status: string; config: unknown; endedAt?: Date }) => Promise<void>; intent: (value: { id: string; shadowSessionId: string; marketId: string; sequence: bigint; observedAt: bigint; side: string; quantity: bigint; referencePrice?: bigint; decision: unknown }) => Promise<void> };

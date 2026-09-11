@@ -21,11 +21,11 @@ P0-22 through P0-25: production validation, deployment preparation, evidence, an
 ## TEST_STATUS
 
 - Typecheck, security lint, unit tests, integration tests, and the production web build passed locally.
-- Playwright and Foundry suites are prepared but their runtimes are not installed locally.
+- Playwright Chromium route smoke passed all 10 anonymous routes and generated 10 screenshots. Foundry registry tests remain runtime-dependent.
 
 ## SHANNON_STATUS
 
-- `pnpm smoke` passed against Shannon chain ID 50312, reading a live Trading market and a finalized market. The genuine canonical dataset, replay, strategy, and run hashes are recorded in `docs/SHANNON_EVIDENCE.md`.
+- `pnpm smoke` passed against Shannon chain ID 50312, reading a live Trading market and a finalized market. The genuine canonical dataset, replay, strategy, and run hashes are recorded in `docs/SHANNON_EVIDENCE.md`. The current database has zero persisted datasets because `RECONSTRUCTION_WRITE_TOKEN` is intentionally not configured.
 
 ## DEPLOYMENT_STATUS
 

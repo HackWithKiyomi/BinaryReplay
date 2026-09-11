@@ -3,15 +3,21 @@
   "private": true,
   "packageManager": "pnpm@10.15.0",
   "scripts": {
-    "dev": "pnpm --filter @binaryreplay/web dev",
+    "dev": "pnpm --filter @binaryreplay/db build && node --env-file=.env apps/web/node_modules/next/dist/bin/next dev apps/web",
     "build": "pnpm -r build",
     "test": "pnpm --filter @binaryreplay/web test",
     "test:unit": "pnpm --filter @binaryreplay/replay test && pnpm --filter @binaryreplay/simulator test && pnpm --filter @binaryreplay/strategies test",
     "test:integration": "pnpm --filter @binaryreplay/web test",
     "typecheck": "pnpm -r typecheck",
     "lint": "node scripts/lint.mjs",
+    "test:browser": "pnpm --filter @binaryreplay/web test:browser",
     "validate": "pnpm typecheck && pnpm lint && pnpm test:unit && pnpm test:integration && pnpm build",
     "smoke": "pnpm --filter @binaryreplay/worker smoke:network",
-    "db:migrate": "node --env-file=.env scripts/migrate.mjs"
+    "smoke:shannon": "pnpm smoke",
+    "doctor": "node --env-file=.env scripts/doctor.mjs",
+    "verify:datasets": "node --env-file=.env scripts/verify-datasets.mjs",
+    "db:generate": "pnpm --filter @binaryreplay/db typecheck",
+    "db:migrate": "node --env-file=.env scripts/migrate.mjs",
+    "db:check": "node --env-file=.env scripts/db-check.mjs"
   }
 }

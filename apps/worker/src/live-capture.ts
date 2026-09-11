@@ -2,7 +2,7 @@ import { saveLiveCaptureRecord } from "@binaryreplay/db";
 import { SOMNIA_TESTNET_ADDRESSES, SomniaMarkets, type BinaryOrderBook, type LiveFill, type LiveOrder } from "@somnia-chain/markets-sdk";
 import { somniaShannon } from "@somnia-chain/markets-sdk/chains";
 
-function dreamdex() { return new SomniaMarkets({ chain: somniaShannon, indexerUrl: process.env.DREAMDEX_INDEXER_URL ?? "https://dev.smk.somnia.host/v1/graphql", wsRpcUrl: process.env.SOMNIA_WS_RPC_URL ?? "wss://api.infra.testnet.somnia.network/ws", addresses: SOMNIA_TESTNET_ADDRESSES }); }
+function dreamdex() { return new SomniaMarkets({ chain: somniaShannon, indexerUrl: process.env.DREAMDEX_INDEXER_URL || "https://dev.smk.somnia.host/v1/graphql", wsRpcUrl: process.env.SOMNIA_WS_RPC_URL || "wss://api.infra.testnet.somnia.network/ws", addresses: SOMNIA_TESTNET_ADDRESSES }); }
 
 export type LiveCaptureRecord = { id: string; marketId: string; capturedAt: string; kind: "snapshot" | "fill" | "order" | "gap" | "stale" | "reconnected"; blockNumber?: string; payload: unknown };
 export type CaptureSink = { append(record: LiveCaptureRecord): Promise<void> };
