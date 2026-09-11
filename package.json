@@ -2,6 +2,9 @@
   "name": "binary-replay",
   "private": true,
   "packageManager": "pnpm@10.15.0",
+  "devDependencies": {
+    "next": "^15.5.0"
+  },
   "scripts": {
     "dev": "pnpm --filter @binaryreplay/db build && node --env-file=.env apps/web/node_modules/next/dist/bin/next dev apps/web",
     "build": "pnpm -r build",
