@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "pnpm --filter @binaryreplay/db build && next dev",
-    "build": "next build",
+    "build": "pnpm --filter @binaryreplay/db build && next build",
     "start": "next start",
     "test": "vitest run --exclude tests/browser/**",
     "test:browser": "playwright test",
