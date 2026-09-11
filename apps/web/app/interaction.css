@@ -1,0 +1,29 @@
+.metric-link {
+  position: relative;
+  cursor: pointer;
+}
+
+.metric-link:hover {
+  margin-right: -.55rem;
+  margin-left: -.55rem;
+  border-color: var(--line-strong);
+  border-radius: var(--radius-sm);
+  padding-right: .55rem;
+  padding-left: .55rem;
+  background: rgba(94, 230, 245, .07);
+  color: var(--cyan);
+}
+
+.metric-link:hover > span:last-child {
+  color: var(--cyan);
+}
+
+.metric-link:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+.replay-unavailable > span:last-child {
+  color: var(--muted);
+  font-weight: 600;
+}
