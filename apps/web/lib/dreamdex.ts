@@ -30,7 +30,11 @@ export async function discoverLiveEventContracts(limit = 20): Promise<EventContr
     const activeStates: BinaryMarketStatus[] = ["Listed", "Trading", "Locked", "Settling"];
     const pages = await Promise.all(activeStates.map((status) => exchange.client.listLiveBinaryMarkets({ limit, status, orderBy: "closingSoon" })));
     const unique = new Map(pages.flat().filter((market) => !isTerminal(market.status)).map((market) => [market.marketId, market]));
-    return [...unique.values()].sort((a, b) => Number(a.expiry) - Number(b.expiry)).slice(0, limit).map(toEventContractRecord);
+    return [...unique.values()].sort((a, b) => {
+      const left = BigInt(a.expiry);
+      const right = BigInt(b.expiry);
+      return left < right ? -1 : left > right ? 1 : 0;
+    }).slice(0, limit).map(toEventContractRecord);
   }
   catch (cause) { throw new EventContractDiscoveryError("Shannon live Event Contract discovery failed", cause); }
   finally { exchange.close(); }
