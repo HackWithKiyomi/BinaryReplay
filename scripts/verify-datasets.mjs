@@ -15,7 +15,8 @@ if (!process.env.DATABASE_URL) {
     const datasets = await db.unsafe("select id, market_id, integrity_hash, source, derived from replay_datasets order by id");
     let invalid = 0;
     for (const dataset of datasets) {
-      const material = { source: dataset.source, derived: dataset.derived };
+      const material = dataset.derived?.manifest;
+      if (!material) { invalid += 1; console.error(`FAIL dataset ${dataset.id}: canonical manifest is missing`); continue; }
       const actual = createHash("sha256").update(canonicalize(material)).digest("hex");
       if (actual !== dataset.integrity_hash) { invalid += 1; console.error(`FAIL dataset ${dataset.id}: integrity hash mismatch`); }
     }
